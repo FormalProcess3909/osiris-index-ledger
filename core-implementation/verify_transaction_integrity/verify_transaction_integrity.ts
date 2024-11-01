@@ -13,15 +13,18 @@ export const verifyTransactionIntegrity: handleUnaryCall<
 	const { transaction_id } = request.request;
 
 	// Check if the transaction exists in the ledger
-	const transactionExists = ledger.some(
+	const transactionExists = ledger.find(
 		(transaction) => transaction.transaction_id === transaction_id,
 	);
 
-	// Log the integrity check result for debugging
-	console.log(
-		`Integrity check for transaction ID ${transaction_id}:`,
-		transactionExists,
-	);
+	if (!transactionExists) {
+		return respond(
+			null,
+			new core.Status({
+				succeeded: false,
+			}),
+		);
+	}
 
 	respond(
 		null,

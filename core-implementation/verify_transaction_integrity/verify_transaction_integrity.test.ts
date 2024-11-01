@@ -49,7 +49,6 @@ test("verify transaction integrity - transaction exists", (done) => {
 		function (err: ServiceError | null, response: core.Status | undefined) {
 			done();
 
-			// Expect the transaction integrity to be verified
 			expect(err).toBeNull();
 			expect(response).toBeDefined();
 			expect(response?.succeeded).toEqual(true);

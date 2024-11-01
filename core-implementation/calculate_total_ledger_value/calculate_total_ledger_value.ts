@@ -16,10 +16,6 @@ export const calculateTotalLedgerValue: handleUnaryCall<
 		0,
 	);
 
-	// Log the calculated value for debugging
-	console.log("Calculated Total Ledger Value:", totalValue);
-
-	// Respond with the total ledger value encapsulated in a CurrencyValue message
 	respond(
 		null,
 		new core.CurrencyValue({
