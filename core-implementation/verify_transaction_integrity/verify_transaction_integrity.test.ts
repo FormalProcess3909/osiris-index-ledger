@@ -29,6 +29,13 @@ beforeAll(async () => {
 			amount: 200.0,
 			timestamp: "2024-01-02T00:00:00Z",
 		}),
+		new core.Transaction({
+			transaction_id: "txn3",
+			sender: "user1",
+			receiver: "user4",
+			amount: 400.0,
+			timestamp: "2024-01-03T00:00:00Z",
+		}),
 	);
 });
 

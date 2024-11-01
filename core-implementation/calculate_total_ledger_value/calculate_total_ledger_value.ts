@@ -1,10 +1,11 @@
 import { handleUnaryCall } from "@grpc/grpc-js";
 import { core } from "../../generated/core/core.js";
 
-// Define the ledger as an exportable object for access in tests or other parts of the application.
+// Define the ledger as an exportable object for access in tests
+// TODO: Remove once DB, maybe Redis, is implemented
 export const ledger: core.Transaction[] = [];
 
-// Define the 'calculateTotalLedgerValue' function as a gRPC service method
+// TODO: Create TypeScript documentation using JSDoc tags
 export const calculateTotalLedgerValue: handleUnaryCall<
 	core.Null,
 	core.CurrencyValue

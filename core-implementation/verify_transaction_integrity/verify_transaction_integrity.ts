@@ -1,7 +1,8 @@
 import { handleUnaryCall } from "@grpc/grpc-js";
 import { core } from "../../generated/core/core.js";
 
-// Define the ledger as an exportable object for access in tests or other parts of the application.
+// Define the ledger as an exportable object for access in tests
+// TODO: Remove once DB, maybe Redis, is implemented
 export const ledger: core.Transaction[] = [];
 
 export const verifyTransactionIntegrity: handleUnaryCall<
@@ -16,7 +17,7 @@ export const verifyTransactionIntegrity: handleUnaryCall<
 		(transaction) => transaction.transaction_id === transaction_id,
 	);
 
-	// Log the integrity check result for debugging purposes
+	// Log the integrity check result for debugging
 	console.log(
 		`Integrity check for transaction ID ${transaction_id}:`,
 		transactionExists,
