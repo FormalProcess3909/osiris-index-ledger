@@ -1,7 +1,7 @@
 import grpc, { ServiceError } from "@grpc/grpc-js";
 import { server, serverUp, target } from "../../main.js";
 import { core } from "../../generated/core/core.js";
-import { ledger } from "../../core-implementation/calculate_total_ledger_value/calculate_total_ledger_value.js";
+import { ledger } from "../../core-implementation/verify_transaction_integrity/verify_transaction_integrity.js";
 
 // Client setup for IndexLedger service
 let client: core.IndexLedgerClient;
@@ -19,14 +19,14 @@ beforeAll(async () => {
 			transaction_id: "txn1",
 			sender: "user1",
 			receiver: "user2",
-			amount: 200.0,
+			amount: 100.0,
 			timestamp: "2024-01-01T00:00:00Z",
 		}),
 		new core.Transaction({
 			transaction_id: "txn2",
 			sender: "user3",
 			receiver: "user4",
-			amount: 300.0,
+			amount: 200.0,
 			timestamp: "2024-01-02T00:00:00Z",
 		}),
 	);
@@ -36,21 +36,16 @@ afterAll(() => {
 	server.forceShutdown();
 });
 
-test("calculate total ledger value", (done) => {
-	client.CalculateTotalLedgerValue(
-		new core.Null(),
-		function (
-			err: ServiceError | null,
-			response: core.CurrencyValue | undefined,
-		) {
+test("verify transaction integrity - transaction exists", (done) => {
+	client.VerifyTransactionIntegrity(
+		new core.TransactionId({ transaction_id: "txn1" }),
+		function (err: ServiceError | null, response: core.Status | undefined) {
 			done();
 
-			// Expected total value in the ledger
-			const expectedTotalValue = 500.0;
-
+			// Expect the transaction integrity to be verified
 			expect(err).toBeNull();
 			expect(response).toBeDefined();
-			expect(response?.value).toEqual(expectedTotalValue);
+			expect(response?.succeeded).toEqual(true);
 		},
 	);
 });
