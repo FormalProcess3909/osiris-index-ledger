@@ -17,6 +17,7 @@ export default function addModule(server: grpc.Server) {
 			getAccountBalance: getAccountBalance,
 			CalculateTotalLedgerValue: calculateTotalLedgerValue,
 			VerifyTransactionIntegrity: verifyTransactionIntegrity,
+			GetAccountBalance: getAccountBalance,
 		},
 	);
 	addService(
